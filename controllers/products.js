@@ -10,19 +10,21 @@ exports.getAddProduct = (req, res, next) => {
 }
 
 exports.postAddProduct = (req, res, next) => {
-    const product = new Product(req.body.title);
+    const product = new Products(req.body.title);
     product.save();
     res.redirect('/');
 }
 
 exports.getProducts = (req, res, next) => {
-    const products = Products.fetchAll()
-    res.render('shop', {
+    Products.fetchAll(products => {
+      res.render('shop', {
       prods: products,
       pageTitle: 'Shop',
       path: '/',
       hasProducts: products.length > 0,
       activeShop: true,
       productCSS: true
-    });
+    });  
+    })
+   
 };
